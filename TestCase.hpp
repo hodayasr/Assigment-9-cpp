@@ -1,26 +1,30 @@
-#pragma once
-#include <iostream>
+
 #include <stdio.h>
 #include <sstream>
+#include <iostream>
+
+#pragma once
 using namespace std;
 
-class TestCase
-{
+class TestCase {
 public:
-
-	ostream *stream;
 	string caseName;
+	ostream *stream;
+	
 
 	int passed, failed;
 	
 	//constructor
-	TestCase(string c, ostream &os) {
+	TestCase(string c, ostream &os)
+	{
 		stream = &os;
 		caseName = c;
 		passed = 0;
 		failed = 0;
 	}
-	template <typename T> TestCase check_equal(T x, T y) {
+	
+	template <typename T> TestCase check_equal(T x, T y)
+	{
 		if (x == y) passed++;
 		else {
 			(*stream) << caseName << ": " << "Failure in test #" << (passed + failed + 1) << ": " << x << " should equal " << y << "!" << endl;
@@ -30,7 +34,8 @@ public:
 	}
 	
 
-	template <typename T> TestCase check_different(T x, T y) {
+	template <typename T> TestCase check_different(T x, T y)
+	{
 		if (x != y) passed++;
 		else {
 			(*stream) << caseName << ": " << "Failure in test #" << (passed + failed + 1) << ": " << x << " should not equal " << y << "!" << endl;
@@ -40,7 +45,8 @@ public:
 	}
 
 
-	template <typename T, typename K, typename Function> TestCase check_function(Function f, K x, T y) {
+	template <typename T, typename K, typename Function> TestCase check_function(Function f, K x, T y) 
+	{
 		
 		if (f(x) == (T)y) passed++;
 		else {
@@ -50,7 +56,8 @@ public:
 		return (*this);
 	}
 
-	template <typename T> TestCase check_output(T x, string y) {
+	template <typename T> TestCase check_output(T x, string y)
+	{
 		stringstream str_x;
 		str_x << x;
 		if (str_x.str() == y) passed++;
@@ -61,9 +68,10 @@ public:
 		return (*this);
 	}
 	
-	void print() {
+	void print()
+	{
 	(*stream) << caseName << ": " << failed << " failed, " << passed << " passed, " << (passed + failed) << " total." << endl;
-}
+	}
 
 };
 
